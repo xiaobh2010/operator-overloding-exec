@@ -2,8 +2,8 @@
         当左手边的类型为内建类型，右手边为自定义类型时，要实现运算必须用一下方法
 -----------------------------------------------------------------------
 反向算术运算符的重载：(所有的运算符都是方法)
-   __radd__(self,lhs)   lhs+self   加法
-  __rsub__(self,lhs)   lhs-self  减法
+__radd__(self,lhs)   lhs+self   加法
+__rsub__(self,lhs)   lhs-self  减法
 __rmul__(self,lhs)   lhs*self   乘法
 __rtruediv__(self,lhs)   lhs/self   除法
 __rfloordiv__(self,lhs)   lhs//self  地板除法
