@@ -1,0 +1,107 @@
+反向算术运算符和赋值运算符的重载
+        当左手边的类型为内建类型，右手边为自定义类型时，要实现运算必须用一下方法
+-----------------------------------------------------------------------
+反向算术运算符的重载：(所有的运算符都是方法)
+   __radd__(self,lhs)   lhs+self   加法
+  __rsub__(self,lhs)   lhs-self  减法
+__rmul__(self,lhs)   lhs*self   乘法
+__rtruediv__(self,lhs)   lhs/self   除法
+__rfloordiv__(self,lhs)   lhs//self  地板除法
+__rmod__(self,lhs)   lhs%self   求余法
+__rpow__(self,lhs)   lhs**self  幂
+ 程序如下：
+class MyList:
+      def __init__(self,iterable):
+         self.data=list(iterable)
+      def __repr__(self):
+         return 'MyList(%s)' % self.data
+      def __add__(self,rhs):
+         v=self.data+rhs.data
+         #print(v)
+         return MyList(v)
+      def __mul__(self,rhs):
+         v=self.data*rhs
+         #print(v)
+         return MyList(v)
+      def __rmul__(self,lhs):
+         print('__rmul__被调用')
+         return MyList(self.data*lhs)
+
+L1=MyList([1,2,3])
+L2=MyList([4,5,6])
+L3=L1+L2
+print(L3)
+L4=L2+L1
+print(L4)
+L5=L1*2
+print(L5)
+#反向运算符
+L6=2*L1 #2.__mul__(L1) #使用反向运算符重载
+#交叉赋值
+print(L6)
+===========================================
+复合赋值算术运算符重载
+L=[]
+L+=[1,2,3]
+---------------------------------------------------------------        
++= 复合赋值运算符
+---------------------------------------------------------------
+__iadd__(self,rhs)   self+=rhs   加法
+__isub__(self,rhs)   self-=rhs   减法
+__imul__(self,rhs)   self*=rhs   乘法
+__itruediv__(self,rhs)   self/=rhs   除法
+__ifloordiv__(self,rhs)   self//=rhs   地板除法
+__imod__(self,rhs)   self%=rhs   求余法
+__ipow__(self,rhs)   self**=rhs   幂
+程序如下：
+class MyList:
+      def __init__(self,iterable):
+         self.data=list(iterable)
+      def __repr__(self):
+         return 'MyList(%s)' % self.data
+      def __add__(self,rhs):
+         v=self.data+rhs.data
+         #print(v)
+         return MyList(v)
+      def __mul__(self,rhs):
+         v=self.data*rhs
+         #print(v)
+         return MyList(v)
+      def __rmul__(self,lhs):
+         print('__rmul__被调用')
+         return MyList(self.data*lhs)
+      def __iadd__(self,rhs):
+         print('__iadd__被调用')
+         #return MyList(self.data.extend(rhs.data))
+         self.data.extend(rhs.data)
+         return self
+
+L1=MyList([1,2,3])
+L2=MyList([4,5,6])
+L3=L1+L2
+print(L3)
+L4=L2+L1
+print(L4)
+L5=L1*2
+print(L5)
+#反向运算符
+L6=2*L1 #2.__mul__(L1) #使用反向运算符重载
+#交叉赋值
+print(L6)
+L1+=L2  #当没有__iadd__方法时，等同于调用
+#L1=L1+L2
+print(L1)
+
+=====================================================================
+
+不加global，局部的无法更改全局的
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
