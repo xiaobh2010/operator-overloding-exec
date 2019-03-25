@@ -1,0 +1,131 @@
+算术运算符重载
+        什么是运算符重载：
+            让自定义的类生成的对象（实例）能够使用运算符进行操作
+        作用：让自定义的类的实例像内建对象一样运行运算符操作让程序简洁易读
+         对自定义的对象，将运算符赋予新的运算规则
+
+算术运算符的重载：(所有的运算符都是方法)
+        __add__(self,rhs)   self+rhs   加法
+        __sub__(self,rhs)   self-rhs   减法
+__mul__(self,rhs)   self*rhs   乘法
+__truediv__(self,rhs)   self/rhs   除法
+__floordiv__(self,rhs)   self//rhs   地板除法
+__mod__(self,rhs)   self%rhs   求余法
+__pow__(self,rhs)   self**rhs   幂
+==========================================
+class MyNumber:
+   def __init__(self,v):
+      self.data=v
+   def __repr__(self):
+      return 'MyNumber(%d)' % self.data
+   def __add__(self,other):
+      print('__add__被调用')
+      v=self.data+other.data
+      return MyNumber(v)
+n1=MyNumber(100)
+n2=MyNumber(200)
+# n3=n1.__add__(n2)
+# print(n3)
+n3=n1+n2
+print(n3)
+
+============================================
+程序如下：
+class MyNumber:
+   def __init__(self,v):
+      self.data=v
+   def __repr__(self):
+      return 'MyNumber(%d)' % self.data
+   def __add__(self,other):
+      print('__add__被调用')
+      v=self.data+other.data
+      return MyNumber(v)
+   def __sub__(self, other):
+      print('__sud__被调用')
+      v = self.data - other.data
+      return MyNumber(v)
+   def __mul__(self, other):
+      print('__mul__被调用')
+      v = self.data * other.data
+      return MyNumber(v)
+   def __truediv__(self, other):
+      print('__triediv__被调用')
+      v = self.data / other.data
+      return MyNumber(v)
+   def __floordiv__(self, other):
+      print('__floordiv__被调用')
+      v = self.data // other.data
+      return MyNumber(v)
+   def __mod__(self, other):
+      print('__mod__被调用')
+      v = self.data % other.data
+      return MyNumber(v)
+   def __pow__(self, other):
+      print('__pow__被调用')
+      v = self.data**other.data
+      return MyNumber(v)
+
+
+n1=MyNumber(100)
+n2=MyNumber(200)
+# n3=n1.__add__(n2)
+# print(n3)
+n3=n1+n2
+print(n3)
+n3=n1-n2
+print(n3)
+n3=n1*n2
+print(n3)
+n3=n1/n2
+print(n3)
+n3=n1//n2
+print(n3)
+n3=n1%n2
+print(n3)
+n3=n1**n2
+print(n3)
+============================================
+练习：
+实现两个自定义列表想加：
+    class MyList:
+        def __init__(self,iterable):
+            self.data=list(iterable)
+       
+    L1=MyList([1,2,3])
+    L2=MyList([4,5,6])
+    L3=L1+L2
+    print(L3)  #MyList([1,2,3,4,5,6])
+============================================ 程序如下：
+class MyList:
+      def __init__(self,iterable):
+         self.data=list(iterable)
+      def __repr__(self):
+         return 'MyList(%r)' % self.data
+      def __add__(self,rhs):
+         v=self.data+rhs.data
+         #print(v)
+         return MyList(v)
+      def __mul__(self,rhs):
+         v=self.data*rhs
+         #print(v)
+         return MyList(v)
+
+L1=MyList([1,2,3])
+L2=MyList([4,5,6])
+L3=L1+L2
+print(L3)
+L4=L2+L1
+print(L4)
+L5=L1*2
+print(L5)
+
+    repr（）函数的重写方法：
+    def __repr__(self):
+        return 能够表达self内容的字符串
+self是对象的引用
+===========================================
+%r用rper()方法处理对象
+
+%s用str()方法处理对象
+
+===========================================
