@@ -1,0 +1,185 @@
+in/not in    运算符的重载
+重载方法：
+        __contains__(self,e):  #实现上述运算符的重载
+                ......
+#e in self
+程序如下：
+class MyList:
+   def __init__(self,iterable):
+      self.data=list(iterable)
+
+   def __repr__(self):
+      return 'MyList(%r)' % self.data
+
+   def __neg__(self):
+      return MyList((-x for x in self.data))
+   #用生成器表达式更好不占内存，数据量大的时候列表表达式占内存
+
+   def __contains__(self, e):
+      '''此方法用来实现in/not in运算符的重载'''
+      print('__contains__被调用')
+      for x in self .data:
+         if x==e:
+            return True
+      return False
+
+L1=MyList([1,-2,3,-4])
+L2=-L1
+print(L2)
+if -2 in L1:
+   print('-2在L1中')
+else:
+   print('-2不在L1中')
+
+===========================================
+索引和切片运算符的重载（有这几个函数才支持切片和索引）
+__getitem__(self,i)    #x=self[i]    索引/切片   
+__setitem__(self,i,val)    #self[i]=val    索引/切片
+__delitem__(self,i)    #del   self[i]    del语句删除索引等
+作用：
+    让自定义的类型的对象能够支持索引和切片操作
+    
+示例：
+class MyList:
+   def __init__(self,iterable):
+      print('__init__被调用')
+      self.data=list(iterable)
+
+   def __repr__(self):
+      return 'MyList(%r)' % self.data
+
+   def __getitem__(self,i):  #self[i]
+      print('__getitem__被调用,i=',i)
+      return 1000
+
+L1=MyList([1,-2,3,-4])
+v=L1[0]
+print(v)
+ ===========================================
+class MyList:
+   def __init__(self,iterable):
+      print('__init__被调用')
+      self.data=list(iterable)
+
+   def __repr__(self):
+      return 'MyList(%r)' % self.data
+
+   def __getitem__(self,i):  #self[i]
+      print('__getitem__被调用,i=',i)
+      return 1000
+
+L1=MyList([1,-2,3,-4])
+v=L1[0]  #L1.__getitem__(0)
+print(v)
+print(L1[10])
+===========================================
+class MyList:
+   def __init__(self,iterable):
+      print('__init__被调用')
+      self.data=list(iterable)
+
+   def __repr__(self):
+      return 'MyList(%r)' % self.data
+
+   def __getitem__(self,i):  #self[i]
+      print('__getitem__被调用,i=',i)
+      return self.data[i]
+
+L1=MyList([1,-2,3,-4])
+v=L1[0]  #L1.__getitem__(0)
+print(v)
+print(L1[3])
+程序运行结果：
+__init__被调用
+__getitem__被调用,i= 0
+1
+__getitem__被调用,i= 3
+-4
+*****************************************************************
+class MyList:
+   def __init__(self,iterable):
+      print('__init__被调用')
+      self.data=list(iterable)
+
+   def __repr__(self):
+      return 'MyList(%r)' % self.data
+
+   def __getitem__(self,i):  #self[i]
+      print('__getitem__被调用,i=',i)
+      if type(i) is not int:
+         raise TypeError
+      return self.data[i]
+
+L1=MyList([1,-2,3,-4])
+v=L1[0]  #L1.__getitem__(0)
+print(v)
+print(L1[3])
+# print(L1['xxx'])
+print(L1[-1])
+
+===========================================
+__setitem__(self,i,val)    #self[i]=val    索引/切片
+class MyList:
+   def __init__(self,iterable):
+      print('__init__被调用')
+      self.data=list(iterable)
+
+   def __repr__(self):
+      return 'MyList(%r)' % self.data
+
+   def __getitem__(self,i):  #self[i]
+      print('__getitem__被调用,i=',i)
+      if type(i) is not int:
+         raise TypeError
+      return self.data[i]
+
+   def __setitem__(self, key,value):
+      print('__setitem__被调用,i=', key)
+      self.data[key]=value
+      return self.data[key]
+
+
+L1=MyList([1,-2,3,-4])
+v=L1[0]  #L1.__getitem__(0)
+print(v)
+print(L1[3])
+# print(L1['xxx'])
+print(L1[-1])
+L1[1]=99
+print(L1[1])
+----------------------------------------------------------------------------
+__delitem__(self,i)    #del   self[i]    del语句删除索引等
+class MyList:
+   def __init__(self,iterable):
+      print('__init__被调用')
+      self.data=list(iterable)
+
+   def __repr__(self):
+      return 'MyList(%r)' % self.data
+
+   def __getitem__(self,i):  #self[i]
+      print('__getitem__被调用,i=',i)
+      if type(i) is not int:
+         raise TypeError
+      return self.data[i]
+
+   def __setitem__(self, key,value):
+      print('__setitem__被调用,i=', key)
+      self.data[key]=value
+      return self.data[key]
+
+   def __delitem__(self, key):
+      print('__delitem__被调用,i=', key)
+      del self.data[key]
+      return self.data
+
+L1=MyList([1,-2,3,-4])
+v=L1[0]  #L1.__getitem__(0)
+print(v)
+print(L1[3])
+# print(L1['xxx'])
+print(L1[-1])
+L1[1]=99
+print(L1[1])
+del L1[2]
+print(L1)
