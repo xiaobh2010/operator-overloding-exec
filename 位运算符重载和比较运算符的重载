@@ -1,0 +1,65 @@
+位运算符重载
+       对象：属性（实例变量） 
+比较运算符的重载
+        __lt__(self,rhs)    self<rhs 小于
+        __le__(self,rhs)    self<=rhs  小于等于
+        __gt__(self,rhs)    self>rhs 大于
+        __ge__(self,rhs)    self>=rhs 大于等于    
+        __eq__(self,rhs)    self==rhs 等于
+        __ne__(self,rhs)    self！=rhs 不等于
+注：
+    比较运算符通常返回True或False
+    
+位运算符重载
+    __invert__(self)    ~self  取反（一元运算符）
+    __and__(self,rhs)    self&rhs  位与        
+    __or__(self,rhs)    self | rhs  位或    
+    __xor__(self,rhs)    self ^ rhs  位异或    
+    __lshift__(self,rhs)    self<<rhs  左移    
+    __rshift__(self,rhs)    self>>rhs  右移 
+
+反向位运算符重载  
+    __rand__(self,lhs)    lhs&self  位与        
+    __ror__(self,lhs)    lhs|self  位或    
+    __rxor__(self,lhs)    lhs^self  位异或    
+    __rlshift__(self,lhs)    lhs<<self  左移    
+    __rrshift__(self,lhs)    lhs>>self  右移 
+
+复合赋值位运算符重载
+    __iand__(self,rhs)    self&=rhs  位与        
+    __ior__(self,rhs)    self|=rhs  位或    
+    __ixor__(self,rhs)    self ^ =rhs  位异或    
+    __ilshift__(self,rhs)    self<<=rhs  左移    
+    __irshift__(self,rhs)    self>>=rhs  右移 
+-------------------------------------------------------
+一元运算符的重载
+    __neg__(self)    - self    负号
+    __pos__(self)    + self    正号
+    __invert__(self)    ~self    取反
+-------------------------------------------------------  
+一元运算符的重载方法：
+    class  类名：
+        def __xxx__(self):
+                ...
+        
+示例见：
+class MyList:
+   def __init__(self,iterable):
+      self.data=list(iterable)
+
+   def __repr__(self):
+      return 'MyList(%r)' % self.data
+
+   def __neg__(self):
+      return MyList((-x for x in self.data))
+#用生成器表达式更好不占内存，数据量大的时候列表表达式占内存
+L1=MyList([1,-2,3,-4])
+L2=-L1
+print(L2)
+ 
+运算符重载说明：
+        运算符重载不能改变运算符的优先级
+        
+python类名最好用驼峰规则
+        MyList    MyRange    大驼峰
+        getStudentAge    小驼峰
