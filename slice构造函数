@@ -1,0 +1,55 @@
+slice构造函数
+---------------------------------------------------------------------------        
+slice函数（返回切片对象，截取元素）
+        作用：用于创建一个slice切片对象，此对象存储一个节片的起始值，终止值和步长
+        slice(start,stop=None,step=None) 创建一个切片对象slice的对象属性
+        slice的对象属性：
+        s.start 切片起始值
+        s.stop 切片终止值
+        s.step 切片步长
+程序如下：
+class MyList:
+   def __init__(self,iterable):
+      print('__init__被调用')
+      self.data=list(iterable)
+
+   def __repr__(self):
+      return 'MyList(%r)' % self.data
+
+   def __getitem__(self,i):  #self[i]
+      print('__getitem__被调用,i=',i)
+      if type(i) is int:
+         # raise TypeError
+         print('正在做索引操作')
+      elif type(i) is slice: #还有这种类型
+         print('正在做切片操作') #i此时为切片对象，可以
+         #通过对象获取属性值
+         print('切片的起始值',i.start)
+         print('切片的终止值',i.stop)
+         print('切片的步长',i.step)
+
+      else:
+         raise KeyError
+      return self.data[i]
+
+   def __setitem__(self, key,value):
+      print('__setitem__被调用,i=', key)
+      self.data[key]=value
+      return self.data[key]
+
+   def __delitem__(self, key):
+      print('__delitem__被调用,i=', key)
+      del self.data[key]
+      return self.data
+
+L1=MyList([1,-2,3,-4])
+v=L1[0]  #L1.__getitem__(0)
+print(v)
+print(L1[3])
+# print(L1['xxx'])
+print(L1[-1])
+L1[1]=99
+print(L1[1])
+del L1[2]
+print(L1)
+print(L1[::2]) #等同于调用L1[slice(None,None,2)]
